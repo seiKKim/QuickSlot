@@ -191,12 +191,19 @@ export async function PUT(request: NextRequest) {
       currentSettings.notifications = { ...currentSettings.notifications, ...updateData.notifications };
     }
     if (updateData.chat) {
-      currentSettings.chat = { ...currentSettings.chat, ...updateData.chat };
-      if (updateData.chat.workingHours) {
+      // workingHours를 제외하고 나머지 속성만 업데이트
+      const { workingHours, ...chatUpdate } = updateData.chat;
+      currentSettings.chat = { 
+        ...currentSettings.chat, 
+        ...chatUpdate 
+      };
+      
+      // workingHours는 별도로 처리 (undefined 필드는 기존 값 유지)
+      if (workingHours) {
         currentSettings.chat.workingHours = {
-          start: updateData.chat.workingHours.start ?? currentSettings.chat.workingHours.start,
-          end: updateData.chat.workingHours.end ?? currentSettings.chat.workingHours.end,
-          timezone: updateData.chat.workingHours.timezone ?? currentSettings.chat.workingHours.timezone,
+          start: workingHours.start ?? currentSettings.chat.workingHours.start,
+          end: workingHours.end ?? currentSettings.chat.workingHours.end,
+          timezone: workingHours.timezone ?? currentSettings.chat.workingHours.timezone,
         };
       }
     }
