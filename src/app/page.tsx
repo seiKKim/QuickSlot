@@ -1,3 +1,4 @@
+// src/app/page.tsx
 'use client';
 
 import ContactSection from '@/components/sections/ContactSection';
@@ -12,7 +13,6 @@ import StatsSection from '@/components/sections/StatsSection';
 import WhyChooseUsSection from '@/components/sections/WhyChooseUsSection';
 import RealTimeStatsSection from '@/components/sections/RealTimeStatsSection';
 import SuccessStoriesSection from '@/components/sections/SuccessStoriesSection';
-import ChatWidget from '@/components/chat/ChatWidget';
 import { ChevronUp, Loader2 } from 'lucide-react';
 
 // 스크롤 진행률 컴포넌트
@@ -214,9 +214,6 @@ export default function HomePage() {
 
       {/* 진행률 표시기 */}
       <ScrollProgress />
-
-      {/* 실시간 채팅 위젯 */}
-      <ChatWidget />
 
       {/* 섹션 네비게이션 (모바일) */}
       <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 lg:hidden z-40">
