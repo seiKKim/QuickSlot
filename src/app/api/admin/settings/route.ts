@@ -195,12 +195,16 @@ export async function PUT(request: NextRequest) {
       const { workingHours, ...chatUpdate } = updateData.chat;
       
       // chatUpdate에 workingHours가 포함되지 않도록 명시적으로 타입 안전성 보장
-      currentSettings.chat = {
-        enabled: chatUpdate.enabled ?? currentSettings.chat.enabled,
-        autoResponse: chatUpdate.autoResponse ?? currentSettings.chat.autoResponse,
-        maxConcurrentChats: chatUpdate.maxConcurrentChats ?? currentSettings.chat.maxConcurrentChats,
-        workingHours: currentSettings.chat.workingHours, // 기존 값 유지
-      };
+      // 각 필드를 명시적으로 업데이트하여 타입 에러 방지
+      if (chatUpdate.enabled !== undefined) {
+        currentSettings.chat.enabled = chatUpdate.enabled;
+      }
+      if (chatUpdate.autoResponse !== undefined) {
+        currentSettings.chat.autoResponse = chatUpdate.autoResponse;
+      }
+      if (chatUpdate.maxConcurrentChats !== undefined) {
+        currentSettings.chat.maxConcurrentChats = chatUpdate.maxConcurrentChats;
+      }
       
       // workingHours는 별도로 처리 (undefined 필드는 기존 값 유지)
       if (workingHours) {
