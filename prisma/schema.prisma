@@ -1,0 +1,282 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 사용자 테이블
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  phone     String?
+  location  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 관계
+  inquiries     Inquiry[]
+  reservations  Reservation[]
+  testimonials  Testimonial[]
+
+  @@map("users")
+}
+
+// 서비스 테이블
+model Service {
+  id          String @id @default(cuid())
+  name        String @unique
+  slug        String @unique
+  description String @db.Text
+  category    String
+  isActive    Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 가격 정보 (JSON으로 저장)
+  pricing     Json
+
+  // 관계
+  reservations Reservation[]
+  testimonials Testimonial[]
+
+  @@map("services")
+}
+
+// 예약 테이블
+model Reservation {
+  id          String            @id @default(cuid())
+  userId      String
+  serviceId   String
+  status      ReservationStatus @default(PENDING)
+  
+  // 예약 정보
+  targetDate     DateTime?
+  targetLocation String?
+  notes          String?         @db.Text
+  urgency        String          @default("normal")
+
+  // 금액 정보
+  totalAmount    Decimal         @db.Decimal(10, 2)
+  depositAmount  Decimal         @db.Decimal(10, 2)
+  depositPaid    Boolean         @default(false)
+  finalPaid      Boolean         @default(false)
+
+  // 결과 정보
+  isSuccessful   Boolean?
+  resultNotes    String?         @db.Text
+  confirmationData Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 관계
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id])
+
+  @@map("reservations")
+}
+
+// 문의 테이블 (이메일 발송 기능 통합)
+model Inquiry {
+  id       String        @id @default(cuid())
+  userId   String?
+  status   InquiryStatus @default(PENDING)
+  
+  // 문의자 정보 (비회원도 가능)
+  name     String
+  email    String
+  phone    String
+  
+  // 문의 내용
+  service  String?
+  subject  String
+  message  String        @db.Text
+  urgency  InquiryUrgency @default(NORMAL) // 기존 String에서 Enum으로 변경
+  
+  // 선호 연락 방법 (새로 추가)
+  contactMethod ContactMethod @default(EMAIL)
+
+  // 답변 정보
+  response String?       @db.Text
+  respondedAt DateTime?
+  respondedBy String?
+
+  // 이메일 발송 정보 (새로 추가)
+  contactId        String?  @unique // QS + timestamp 형태
+  adminEmailSent   Boolean  @default(false)
+  customerEmailSent Boolean @default(false)
+  adminEmailId     String?  @db.VarChar(255)
+  customerEmailId  String?  @db.VarChar(255)
+  
+  // 추적 정보 (새로 추가)
+  ipAddress        String?  @db.VarChar(45)
+  userAgent        String?  @db.Text
+  responseDeadline DateTime? // 답변 예정 시간
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 관계
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("inquiries")
+  @@index([service])
+  @@index([urgency])
+  @@index([status])
+  @@index([contactId])
+  @@index([responseDeadline])
+}
+
+// 후기 테이블
+model Testimonial {
+  id       String @id @default(cuid())
+  userId   String?
+  serviceId String
+
+  // 후기 내용
+  title        String
+  content      String        @db.Text
+  rating       Int           @db.TinyInt
+  pros         Json          
+  cons         Json          
+  
+  // 이용 정보
+  usageDate    DateTime
+  location     String
+  
+  // 추천 여부
+  wouldRecommend Boolean     @default(true)
+  
+  // 공개 설정
+  isPublic     Boolean       @default(true)
+  isVerified   Boolean       @default(false)
+  isApproved   Boolean       @default(false)
+  
+  // 유용성
+  helpfulCount Int           @default(0)
+  
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  publishedAt  DateTime?
+
+  // 관계
+  user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  service Service @relation(fields: [serviceId], references: [id])
+
+  @@map("testimonials")
+}
+
+// FAQ 테이블
+model FAQ {
+  id          String   @id @default(cuid())
+  category    String
+  question    String   @db.Text
+  answer      String   @db.Text
+  tags        Json
+  isPopular   Boolean  @default(false)
+  viewCount   Int      @default(0)
+  helpfulCount Int     @default(0)
+  sortOrder   Int      @default(0)
+  isPublic    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("faqs")
+}
+
+// 통계 테이블 (캐시용)
+model Statistic {
+  id            String   @id @default(cuid())
+  key           String   @unique
+  value         Json
+  lastUpdated   DateTime @default(now())
+
+  @@map("statistics")
+}
+
+// 설정 테이블
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value Json
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("settings")
+}
+
+// 일일 문의 통계 테이블 (새로 추가)
+model InquiryStats {
+  id              String   @id @default(cuid())
+  date            DateTime @unique @db.Date
+  
+  // 서비스별 통계
+  campingCount    Int      @default(0)
+  concertCount    Int      @default(0)
+  medicalCount    Int      @default(0)
+  educationCount  Int      @default(0)
+  pensionCount    Int      @default(0)
+  hotelCount      Int      @default(0)
+  flightCount     Int      @default(0)
+  restaurantCount Int      @default(0)
+  golfCount       Int      @default(0)
+  spaCount        Int      @default(0)
+  exhibitionCount Int      @default(0)
+  musicalCount    Int      @default(0)
+  otherCount      Int      @default(0)
+  
+  // 유형별 통계
+  normalCount     Int      @default(0)
+  urgentCount     Int      @default(0)
+  
+  // 방법별 통계
+  kakaoCount      Int      @default(0)
+  emailCount      Int      @default(0)
+  
+  // 상태별 통계
+  pendingCount    Int      @default(0)
+  respondedCount  Int      @default(0)
+  closedCount     Int      @default(0)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("inquiry_stats")
+  @@index([date])
+}
+
+// 열거형 정의
+enum ReservationStatus {
+  PENDING     // 대기중
+  IN_PROGRESS // 진행중
+  COMPLETED   // 완료
+  FAILED      // 실패
+  CANCELLED   // 취소
+  REFUNDED    // 환불완료
+}
+
+enum InquiryStatus {
+  PENDING   // 대기중
+  RESPONDED // 답변완료
+  CLOSED    // 종료
+}
+
+// 새로 추가된 열거형들
+enum InquiryUrgency {
+  NORMAL    // 일반 (24시간 내 답변)
+  URGENT    // 긴급 (2시간 내 답변)
+}
+
+enum ContactMethod {
+  KAKAO     // 카카오톡
+  EMAIL     // 이메일
+}

@@ -1,0 +1,27 @@
+# robots.txt for QuickSlot 예약대행
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Disallow admin pages
+Disallow: /admin
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://quickslot.co.kr/sitemap.xml
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Naver specific
+User-agent: Yeti
+Allow: /
+Crawl-delay: 1
+
+User-agent: NaverBot
+Allow: /
+Crawl-delay: 1
+

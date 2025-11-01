@@ -1,0 +1,112 @@
+import './globals.css'
+
+import { Inter } from 'next/font/google'
+import type { Metadata } from 'next'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata: Metadata = {
+  title: 'QuickSlot 예약대행 - 한 번의 클릭으로 예약의 스트레스를 해결합니다',
+  description: '캠핑장, 콘서트, 병원 예약까지 - 모든 선착순 예약을 완벽하게 대행합니다. 99.2% 성공률과 전문적인 서비스로 소중한 시간을 절약하세요.',
+  keywords: '예약대행, 캠핑장예약, 콘서트티켓팅, 병원예약, 온라인예약, 선착순예약, 예약대행서비스, 티켓팅대행, 병원예약대행',
+  authors: [{ name: 'QuickSlot 예약대행' }],
+  creator: 'QuickSlot 예약대행',
+  publisher: 'QuickSlot 예약대행',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://quickslot.co.kr'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'QuickSlot 예약대행 - 전문 예약 대행 서비스',
+    description: '압도적인 예약 시스템으로 소중한 시간의 가치를 극대화합니다. 99.2% 성공률 보장!',
+    url: 'https://quickslot.co.kr',
+    siteName: 'QuickSlot 예약대행',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'QuickSlot 예약대행 - 전문 예약 대행 서비스',
+      },
+    ],
+    locale: 'ko_KR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'QuickSlot 예약대행 - 전문 예약 대행 서비스',
+    description: '압도적인 예약 시스템으로 소중한 시간의 가치를 극대화합니다. 99.2% 성공률 보장!',
+    images: ['/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+    other: {
+      'naver-site-verification': 'your-naver-verification-code',
+    },
+  },
+  other: {
+    'naver-site-verification': 'your-naver-verification-code',
+  },
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  // 구조화된 데이터 (Schema.org JSON-LD)
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'QuickSlot 예약대행',
+    description: '전문 예약 대행 서비스 - 캠핑장, 콘서트, 병원 예약까지 모든 선착순 예약을 완벽하게 대행합니다',
+    url: 'https://quickslot.co.kr',
+    logo: 'https://quickslot.co.kr/icons/logo.svg',
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '1588-0000',
+      contactType: 'customer service',
+      areaServed: 'KR',
+      availableLanguage: 'Korean'
+    },
+    sameAs: [
+      'https://open.kakao.com/o/soQDqKJh'
+    ],
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '1247'
+    }
+  };
+
+  return (
+    <html lang="ko">
+      <head>
+        {/* 구조화된 데이터 (JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </head>
+      <body className={inter.className}>
+        {children}
+      </body>
+    </html>
+  )
+}
