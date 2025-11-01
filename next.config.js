@@ -1,10 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 실험적 기능들
-  experimental: {
-    // 앱 디렉토리 사용
-    appDir: true,
-  },
   
   // 이미지 최적화 설정
   images: {

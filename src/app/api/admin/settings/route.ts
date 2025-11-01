@@ -193,7 +193,11 @@ export async function PUT(request: NextRequest) {
     if (updateData.chat) {
       currentSettings.chat = { ...currentSettings.chat, ...updateData.chat };
       if (updateData.chat.workingHours) {
-        currentSettings.chat.workingHours = { ...currentSettings.chat.workingHours, ...updateData.chat.workingHours };
+        currentSettings.chat.workingHours = {
+          start: updateData.chat.workingHours.start ?? currentSettings.chat.workingHours.start,
+          end: updateData.chat.workingHours.end ?? currentSettings.chat.workingHours.end,
+          timezone: updateData.chat.workingHours.timezone ?? currentSettings.chat.workingHours.timezone,
+        };
       }
     }
     if (updateData.security) {
