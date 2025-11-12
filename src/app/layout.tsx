@@ -59,6 +59,8 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || 'ZpkHNGlcyqzMm2lWO9CigaPgKxi4CnWbyLmI0tU26C4',
   },
   other: {
+    // 구글 서치 콘솔 인증 코드 (환경 변수가 없으면 하드코딩된 값 사용)
+    'google-site-verification': process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || 'ZpkHNGlcyqzMm2lWO9CigaPgKxi4CnWbyLmI0tU26C4',
     // 네이버 서치어드바이저 인증 코드 (환경 변수가 없으면 하드코딩된 값 사용)
     'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_VERIFICATION || 'f04bc9f156ecaca62be8301ec2a8aa7bcde51e14',
   },
