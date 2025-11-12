@@ -68,7 +68,7 @@ export const createInquirySchema = z.object({
   service: z.string().optional(),
   subject: z.string().min(5, '제목은 5자 이상이어야 합니다'),
   message: z.string().min(20, '문의 내용은 20자 이상이어야 합니다'),
-  urgency: z.enum(['low', 'normal', 'high']).default('normal')
+  urgency: z.enum(['normal', 'urgent']).default('normal').optional()
 })
 
 // TypeScript 타입 추출

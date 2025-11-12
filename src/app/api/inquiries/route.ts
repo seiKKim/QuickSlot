@@ -81,6 +81,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
       // 사용자가 없어도 문의 작성 가능
     }
 
+    // urgency 값을 Prisma enum 형식으로 변환 (normal -> NORMAL, urgent -> URGENT)
+    const urgencyValue = validatedData.urgency === 'urgent' ? 'URGENT' : 'NORMAL';
+
     // 문의 생성
     const inquiry = await prisma.inquiry.create({
       data: {
@@ -91,7 +94,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ApiRespon
         service: validatedData.service,
         subject: validatedData.subject,
         message: validatedData.message,
-        urgency: validatedData.urgency || 'normal',
+        urgency: urgencyValue,
         status: 'PENDING'
       }
     })
