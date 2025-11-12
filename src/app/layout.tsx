@@ -17,14 +17,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://quickslot.co.kr'),
+  metadataBase: new URL('https://quick-slot-ochre.vercel.app'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'QuickSlot 예약대행 - 전문 예약 대행 서비스',
     description: '압도적인 예약 시스템으로 소중한 시간의 가치를 극대화합니다. 99.2% 성공률 보장!',
-    url: 'https://quickslot.co.kr',
+    url: 'https://quick-slot-ochre.vercel.app',
     siteName: 'QuickSlot 예약대행',
     images: [
       {
@@ -75,8 +75,8 @@ export default function RootLayout({
     '@type': 'Organization',
     name: 'QuickSlot 예약대행',
     description: '전문 예약 대행 서비스 - 캠핑장, 콘서트, 교육 신청까지 모든 선착순 예약을 완벽하게 대행합니다',
-    url: 'https://quickslot.co.kr',
-    logo: 'https://quickslot.co.kr/icons/logo.svg',
+    url: 'https://quick-slot-ochre.vercel.app',
+    logo: 'https://quick-slot-ochre.vercel.app/icons/logo.svg',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '1588-0000',
@@ -99,12 +99,12 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'QuickSlot 예약대행',
-    url: 'https://quickslot.co.kr',
+    url: 'https://quick-slot-ochre.vercel.app',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://quickslot.co.kr/search?q={search_term_string}'
+        urlTemplate: 'https://quick-slot-ochre.vercel.app/search?q={search_term_string}'
       },
       'query-input': 'required name=search_term_string'
     }

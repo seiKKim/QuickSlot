@@ -9,7 +9,7 @@ Disallow: /admin
 Disallow: /api/
 
 # Sitemap location
-Sitemap: https://quickslot.co.kr/sitemap.xml
+Sitemap: https://quick-slot-ochre.vercel.app/sitemap.xml
 
 # Google specific
 User-agent: Googlebot

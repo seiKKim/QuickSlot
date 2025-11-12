@@ -8,8 +8,8 @@ export default function StructuredData() {
     '@type': 'Organization',
     name: 'QuickSlot 예약대행',
     description: '전문 예약 대행 서비스 - 캠핑장, 콘서트, 병원 예약까지 모든 선착순 예약을 완벽하게 대행합니다',
-    url: 'https://quickslot.co.kr',
-    logo: 'https://quickslot.co.kr/icons/logo.svg',
+    url: 'https://quick-slot-ochre.vercel.app',
+    logo: 'https://quick-slot-ochre.vercel.app/icons/logo.svg',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '1588-0000',
@@ -43,7 +43,7 @@ export default function StructuredData() {
     serviceType: '예약 대행 서비스',
     availableChannel: {
       '@type': 'ServiceChannel',
-      serviceUrl: 'https://quickslot.co.kr',
+      serviceUrl: 'https://quick-slot-ochre.vercel.app',
       servicePhone: '1588-0000'
     }
   };
