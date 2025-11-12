@@ -59,8 +59,8 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || '',
   },
   other: {
-    // 네이버 서치어드바이저 인증 코드
-    'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_VERIFICATION || '',
+    // 네이버 서치어드바이저 인증 코드 (환경 변수가 없으면 하드코딩된 값 사용)
+    'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_VERIFICATION || 'f04bc9f156ecaca62be8301ec2a8aa7bcde51e14',
   },
 }
 
