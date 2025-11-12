@@ -340,25 +340,25 @@ export default function MedicalPage() {
                   <div className="text-4xl font-bold text-teal-600 mb-2">
                     {medicalService.price.basic.toLocaleString()}원
                   </div>
-                  <p className="text-gray-600">일반 병원 및 클리닉</p>
+                  <p className="text-gray-700 font-medium">일반 병원 및 클리닉</p>
                 </div>
                 
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">전문 담당자 1:1 상담</span>
+                    <span className="text-sm text-gray-800">전문 담당자 1:1 상담</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">의료진 스케줄 분석</span>
+                    <span className="text-sm text-gray-800">의료진 스케줄 분석</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">실패시 전액 환불</span>
+                    <span className="text-sm text-gray-800">실패시 전액 환불</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">예약 확정시 안내</span>
+                    <span className="text-sm text-gray-800">예약 확정시 안내</span>
                   </li>
                 </ul>
                 
@@ -379,25 +379,25 @@ export default function MedicalPage() {
                   <div className="text-4xl font-bold text-red-600 mb-2">
                     {medicalService.price.premium.toLocaleString()}원
                   </div>
-                  <p className="text-gray-600">대학병원, 응급 예약</p>
+                  <p className="text-gray-700 font-medium">대학병원, 응급 예약</p>
                 </div>
                 
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">일반 서비스 모든 혜택</span>
+                    <span className="text-sm text-gray-800">일반 서비스 모든 혜택</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">당일/응급 예약 처리</span>
+                    <span className="text-sm text-gray-800">당일/응급 예약 처리</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">24시간 전담 상담</span>
+                    <span className="text-sm text-gray-800">24시간 전담 상담</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">특진 의료진 예약</span>
+                    <span className="text-sm text-gray-800">특진 의료진 예약</span>
                   </li>
                 </ul>
                 

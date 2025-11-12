@@ -12,6 +12,7 @@ export interface ServiceDetail {
   description: string;
   features: string[];
   details: string;
+  badge?: 'NEW' | '인기' | '추천'; // 배지 타입
   price: {
     basic: number;
     premium: number;
@@ -27,6 +28,7 @@ export const services: Record<string, ServiceDetail> = {
     title: '캠핑장 예약',
     icon: Tent,
     description: '인기 캠핑장의 선착순 예약을 대행해드립니다',
+    badge: '인기', // NEW, 인기, 추천 등
     features: [
       '실시간 모니터링을 통한 정확한 예약 시점 파악',
       '높은 성공률을 자랑하는 전문 예약 시스템',
@@ -51,6 +53,7 @@ export const services: Record<string, ServiceDetail> = {
     title: '콘서트 티켓팅',
     icon: Music,
     description: '인기 콘서트 및 공연 티켓 예약을 전문적으로 대행합니다',
+    badge: 'NEW',
     features: [
       '전문 티켓팅 시스템으로 동시 접속 최적화',
       '대기열 관리 및 우선순위 확보 전략',
@@ -77,6 +80,7 @@ export const services: Record<string, ServiceDetail> = {
     title: '병원 예약',
     icon: Stethoscope,
     description: '예약이 어려운 병원 진료 예약을 대행해드립니다',
+    badge: '추천',
     features: [
       '의료진 스케줄 분석을 통한 최적 예약 시간 선택',
       '응급 예약이 필요한 경우 우선 처리',

@@ -197,7 +197,7 @@ export default function EducationPage() {
                     <h3 className="text-2xl font-bold text-gray-900 mb-2">
                       {type.name}
                     </h3>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-gray-700 font-medium mb-4">
                       {type.description}
                     </p>
                     
@@ -222,7 +222,7 @@ export default function EducationPage() {
                         <div key={idx} className="bg-gray-50 rounded-lg p-3 text-sm">
                           <div className="flex items-center">
                             <div className={`w-2 h-2 rounded-full mr-2 ${type.isPopular ? 'bg-blue-500' : 'bg-indigo-500'}`}></div>
-                            {example}
+                            <span className="text-gray-800">{example}</span>
                           </div>
                         </div>
                       ))}

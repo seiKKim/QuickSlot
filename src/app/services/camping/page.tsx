@@ -175,21 +175,21 @@ export default function CampingPage() {
                   <div className="text-4xl font-bold text-blue-600 mb-2">
                     {campingService.price.basic.toLocaleString()}원
                   </div>
-                  <p className="text-gray-600">일반적인 캠핑장 예약 대행</p>
+                  <p className="text-gray-700 font-medium">일반적인 캠핑장 예약 대행</p>
                 </div>
                 
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">전문 담당자 1:1 배정</span>
+                    <span className="text-sm text-gray-800">전문 담당자 1:1 배정</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">실시간 진행상황 공유</span>
+                    <span className="text-sm text-gray-800">실시간 진행상황 공유</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">실패시 전액 환불</span>
+                    <span className="text-sm text-gray-800">실패시 전액 환불</span>
                   </li>
                 </ul>
                 
@@ -215,25 +215,25 @@ export default function CampingPage() {
                   <div className="text-4xl font-bold text-blue-600 mb-2">
                     {campingService.price.premium.toLocaleString()}원
                   </div>
-                  <p className="text-gray-600">긴급 예약 및 우선 처리</p>
+                  <p className="text-gray-700 font-medium">긴급 예약 및 우선 처리</p>
                 </div>
                 
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">기본 서비스 모든 혜택</span>
+                    <span className="text-sm text-gray-800">기본 서비스 모든 혜택</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">당일/익일 긴급 예약 가능</span>
+                    <span className="text-sm text-gray-800">당일/익일 긴급 예약 가능</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">24시간 전담 상담</span>
+                    <span className="text-sm text-gray-800">24시간 전담 상담</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">우선순위 처리</span>
+                    <span className="text-sm text-gray-800">우선순위 처리</span>
                   </li>
                 </ul>
                 

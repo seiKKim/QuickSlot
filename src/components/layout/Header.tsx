@@ -43,8 +43,23 @@ const Header = () => {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 최근 검색어 로드
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('recentSearches');
+      if (saved) {
+        try {
+          setRecentSearches(JSON.parse(saved));
+        } catch (e) {
+          console.error('Failed to parse recent searches:', e);
+        }
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,15 +138,38 @@ const Header = () => {
     };
   }, [searchQuery]);
 
+  // 최근 검색어 저장
+  const saveRecentSearch = (query: string) => {
+    if (!query.trim()) return;
+    
+    const updated = [query, ...recentSearches.filter(s => s !== query)].slice(0, 5);
+    setRecentSearches(updated);
+    
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('recentSearches', JSON.stringify(updated));
+    }
+  };
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      saveRecentSearch(searchQuery);
       router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
       setIsSearchOpen(false);
       setSearchQuery('');
       setSearchResults([]);
       setShowResults(false);
     }
+  };
+
+  const handleRecentSearchClick = (query: string) => {
+    setSearchQuery(query);
+    saveRecentSearch(query);
+    router.push(`/search?q=${encodeURIComponent(query)}`);
+    setIsSearchOpen(false);
+    setSearchQuery('');
+    setSearchResults([]);
+    setShowResults(false);
   };
 
   const handleResultClick = (url: string) => {
@@ -176,12 +214,6 @@ const Header = () => {
       desc: '초고속 티켓팅 대행'
     },
     { 
-      href: '/services/medical', 
-      label: '병원 예약', 
-      icon: '🏥',
-      desc: '대형병원 빠른 예약'
-    },
-    { 
       href: '/services/education', 
       label: '교육 신청', 
       icon: '🎓',
@@ -204,15 +236,38 @@ const Header = () => {
     { href: '/process', label: '이용절차', icon: BookOpen },
   ];
 
+  // 서비스 빠른 링크 (두클래스 스타일)
+  const quickServiceLinks = [
+    { href: '/services/camping', label: '캠핑장 예약', icon: '🏕️' },
+    { href: '/services/concert', label: '콘서트 티켓팅', icon: '🎵' },
+    { href: '/services/education', label: '교육 신청', icon: '🎓' },
+  ];
+
   return (
     <>
-      {/* 최상단 유틸리티 바 */}
+      {/* 최상단 유틸리티 바 - 두클래스 스타일 */}
       <div className={`fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-blue-600 to-indigo-600 backdrop-blur-sm border-b border-blue-500/30 transition-all duration-300 ${
         isUtilityVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
       }`}>
         <div className="container">
           <div className="flex justify-between items-center h-10 text-sm">
-            <div className="flex items-center space-x-4">
+            {/* 왼쪽: 서비스 빠른 링크 */}
+            <div className="flex items-center space-x-1 overflow-x-auto scrollbar-hide">
+              <span className="text-white/80 text-xs font-medium mr-2 hidden md:inline whitespace-nowrap">서비스 바로가기:</span>
+              {quickServiceLinks.map((service, index) => (
+                <a
+                  key={service.href}
+                  href={service.href}
+                  className="text-white/90 hover:text-white transition-all duration-300 flex items-center group px-2 py-1 rounded hover:bg-white/10 whitespace-nowrap"
+                >
+                  <span className="text-xs mr-1 group-hover:scale-110 transition-transform duration-300">{service.icon}</span>
+                  <span className="text-xs font-medium hidden lg:inline">{service.label}</span>
+                </a>
+              ))}
+            </div>
+            
+            {/* 오른쪽: 유틸리티 메뉴 */}
+            <div className="flex items-center space-x-3">
               {utilityMenu.map((item, index) => {
                 const IconComponent = item.icon;
                 return (
@@ -486,6 +541,31 @@ const Header = () => {
               </div>
             </form>
 
+            {/* 최근 검색어 */}
+            {!showResults && recentSearches.length > 0 && !searchQuery && (
+              <div className="flex-1 overflow-y-auto p-6">
+                <h4 className="text-sm font-semibold text-gray-700 mb-4 flex items-center">
+                  <Clock className="w-4 h-4 mr-2" />
+                  최근 검색어
+                </h4>
+                <div className="space-y-2">
+                  {recentSearches.map((search, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleRecentSearchClick(search)}
+                      className="w-full text-left px-4 py-3 bg-white hover:bg-blue-50 rounded-xl transition-all duration-300 border border-gray-200 hover:border-blue-300 hover:shadow-md group flex items-center justify-between"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <Clock className="w-4 h-4 text-gray-400" />
+                        <span className="text-sm text-gray-700 group-hover:text-blue-600">{search}</span>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* 검색 결과 */}
             {showResults && searchResults.length > 0 && (
               <div className="flex-1 overflow-y-auto p-6">
@@ -553,17 +633,33 @@ const Header = () => {
                 <div className="text-center">
                   <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-600 font-medium mb-2">검색 결과가 없습니다</p>
-                  <p className="text-sm text-gray-500">다른 검색어를 시도해보세요</p>
+                  <p className="text-sm text-gray-500 mb-4">다른 검색어를 시도해보세요</p>
+                  {recentSearches.length > 0 && (
+                    <div>
+                      <p className="text-sm text-gray-500 mb-3">최근 검색어</p>
+                      <div className="flex flex-wrap gap-2 justify-center">
+                        {recentSearches.slice(0, 3).map((search, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleRecentSearchClick(search)}
+                            className="px-3 py-1.5 text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-full transition-colors duration-300"
+                          >
+                            {search}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
 
             {/* 검색 제안 (결과가 없을 때) */}
-            {!showResults && !isSearching && (
+            {!showResults && !isSearching && !searchQuery && recentSearches.length === 0 && (
               <div className="flex-1 overflow-y-auto p-6">
                 <h4 className="text-sm font-semibold text-blue-600 mb-3">인기 검색어</h4>
                 <div className="space-y-2">
-                  {['캠핑장 예약', '콘서트 티켓팅', '병원 예약', '교육 신청', 'FAQ', '후기'].map((suggestion, index) => (
+                  {['캠핑장 예약', '콘서트 티켓팅', '교육 신청', 'FAQ', '후기'].map((suggestion, index) => (
                     <button
                       key={index}
                       onClick={() => setSearchQuery(suggestion)}

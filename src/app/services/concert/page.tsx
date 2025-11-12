@@ -258,31 +258,36 @@ export default function ConcertPage() {
                   <div className="text-4xl font-bold text-blue-600 mb-2">
                     {concertService.price.basic.toLocaleString()}원
                   </div>
-                  <p className="text-gray-600">대부분의 콘서트 및 공연</p>
+                  <p className="text-gray-700 font-medium">대부분의 콘서트 및 공연</p>
                 </div>
                 
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">전문 티켓팅 시스템 사용</span>
+                    <span className="text-sm text-gray-800">전문 티켓팅 시스템 사용</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">실시간 진행상황 공유</span>
+                    <span className="text-sm text-gray-800">실시간 진행상황 공유</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">실패시 전액 환불</span>
+                    <span className="text-sm text-gray-800">실패시 전액 환불</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">좌석 선택권 협의</span>
+                    <span className="text-sm text-gray-800">좌석 선택권 협의</span>
                   </li>
                 </ul>
                 
-                <button className="w-full btn-secondary border-blue-600 text-blue-600 hover:bg-blue-50">
+                <a
+                  href="https://open.kakao.com/o/soQDqKJh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full btn-secondary border-blue-600 text-blue-600 hover:bg-blue-50 block text-center"
+                >
                   일반 티켓팅 신청
-                </button>
+                </a>
               </div>
 
               <div className="bg-white rounded-2xl p-8 shadow-lg border-2 border-blue-500 relative">
@@ -297,31 +302,36 @@ export default function ConcertPage() {
                   <div className="text-4xl font-bold text-blue-600 mb-2">
                     {concertService.price.premium.toLocaleString()}원
                   </div>
-                  <p className="text-gray-600">BTS, 아이유 등 초고난이도</p>
+                  <p className="text-gray-700 font-medium">BTS, 아이유 등 초고난이도</p>
                 </div>
                 
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">일반 서비스 모든 혜택</span>
+                    <span className="text-sm text-gray-800">일반 서비스 모든 혜택</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">다중 접속 시스템 동원</span>
+                    <span className="text-sm text-gray-800">다중 접속 시스템 동원</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">전담팀 24시간 대기</span>
+                    <span className="text-sm text-gray-800">전담팀 24시간 대기</span>
                   </li>
                   <li className="flex items-center">
                     <CheckCircle className="text-green-500 mr-3" size={16} />
-                    <span className="text-sm">좌석 등급별 동시 시도</span>
+                    <span className="text-sm text-gray-800">좌석 등급별 동시 시도</span>
                   </li>
                 </ul>
                 
-                <button className="w-full btn-primary bg-blue-600 hover:bg-blue-700">
+                <a
+                  href="https://open.kakao.com/o/soQDqKJh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full btn-primary bg-blue-600 hover:bg-blue-700 block text-center"
+                >
                   프리미엄 티켓팅 신청
-                </button>
+                </a>
               </div>
             </div>
           </div>

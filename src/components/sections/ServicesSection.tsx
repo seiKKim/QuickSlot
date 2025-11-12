@@ -37,14 +37,14 @@ const ServicesSection = () => {
             </span>
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            <span className="font-semibold text-xl md:text-2xl text-blue-600">캠핑장, 콘서트, 병원, 교육 신청</span>까지<br />
+            <span className="font-semibold text-xl md:text-2xl text-blue-600">캠핑장, 콘서트, 교육 신청</span>까지<br />
             <span className="font-medium text-gray-700 text-base md:text-lg">전문 예약대행팀</span>이 99.2% 성공률로 보장합니다.
           </p>
         </div>
 
         {/* 깔끔한 서비스 탭 */}
-        <div className={`grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          {Object.entries(services).map(([key, service], index) => (
+        <div className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          {Object.entries(services).filter(([key]) => key !== 'medical').map(([key, service], index) => (
             <div 
               key={key}
               className={`group relative cursor-pointer transition-all duration-300 hover:scale-105 ${
@@ -63,6 +63,19 @@ const ServicesSection = () => {
                 {/* 선택된 상태 배경 */}
                 {selectedService === key && (
                   <div className="absolute inset-0 bg-blue-50/50" />
+                )}
+                
+                {/* NEW/인기/추천 배지 (두클래스 스타일) */}
+                {service.badge && (
+                  <div className={`absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-bold shadow-md z-10 ${
+                    service.badge === 'NEW' 
+                      ? 'bg-gradient-to-r from-accent-orange-500 to-accent-amber-500 text-white' 
+                      : service.badge === '인기'
+                      ? 'bg-gradient-to-r from-accent-orange-400 to-accent-orange-600 text-white'
+                      : 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white'
+                  }`}>
+                    {service.badge}
+                  </div>
                 )}
                 
                 {/* 아이콘 */}

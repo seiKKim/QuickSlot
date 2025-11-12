@@ -55,13 +55,12 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code',
+    // 구글 사이트 인증 코드 (Google Search Console에서 발급받은 코드로 교체 필요)
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || '',
     other: {
-      'naver-site-verification': 'your-naver-verification-code',
+      // 네이버 사이트 인증 코드 (네이버 서치어드바이저에서 발급받은 코드로 교체 필요)
+      'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_VERIFICATION || '',
     },
-  },
-  other: {
-    'naver-site-verification': 'your-naver-verification-code',
   },
 }
 
@@ -75,7 +74,7 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'QuickSlot 예약대행',
-    description: '전문 예약 대행 서비스 - 캠핑장, 콘서트, 병원 예약까지 모든 선착순 예약을 완벽하게 대행합니다',
+    description: '전문 예약 대행 서비스 - 캠핑장, 콘서트, 교육 신청까지 모든 선착순 예약을 완벽하게 대행합니다',
     url: 'https://quickslot.co.kr',
     logo: 'https://quickslot.co.kr/icons/logo.svg',
     contactPoint: {
@@ -95,6 +94,22 @@ export default function RootLayout({
     }
   };
 
+  // 웹사이트 구조화된 데이터
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'QuickSlot 예약대행',
+    url: 'https://quickslot.co.kr',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://quickslot.co.kr/search?q={search_term_string}'
+      },
+      'query-input': 'required name=search_term_string'
+    }
+  };
+
   return (
     <html lang="ko">
       <head>
@@ -103,6 +118,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        {/* 네이버 서치어드바이저 사이트맵 제출 */}
+        <meta name="naver-site-verification" content={process.env.NEXT_PUBLIC_NAVER_VERIFICATION || ''} />
       </head>
       <body className={inter.className}>
         {children}
