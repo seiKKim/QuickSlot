@@ -57,10 +57,10 @@ export const metadata: Metadata = {
   verification: {
     // 구글 사이트 인증 코드 (Google Search Console에서 발급받은 코드로 교체 필요)
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || '',
-    other: {
-      // 네이버 사이트 인증 코드 (네이버 서치어드바이저에서 발급받은 코드로 교체 필요)
-      'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_VERIFICATION || '',
-    },
+  },
+  other: {
+    // 네이버 서치어드바이저 인증 코드
+    'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_VERIFICATION || '',
   },
 }
 
@@ -122,8 +122,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
-        {/* 네이버 서치어드바이저 사이트맵 제출 */}
-        <meta name="naver-site-verification" content={process.env.NEXT_PUBLIC_NAVER_VERIFICATION || ''} />
       </head>
       <body className={inter.className}>
         {children}
