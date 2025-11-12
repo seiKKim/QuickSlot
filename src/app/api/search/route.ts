@@ -3,6 +3,9 @@ import { services } from '@/data/services';
 import { searchFAQs } from '@/data/faqs';
 import { getTestimonialsByService } from '@/data/testimonials';
 
+// 동적 렌더링 강제 (검색 쿼리 파라미터 사용)
+export const dynamic = 'force-dynamic';
+
 export interface SearchResult {
   type: 'service' | 'faq' | 'review' | 'page';
   id: string;

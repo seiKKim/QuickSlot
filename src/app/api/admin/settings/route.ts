@@ -216,9 +216,29 @@ export async function PUT(request: NextRequest) {
       }
     }
     if (updateData.security) {
-      currentSettings.security = { ...currentSettings.security, ...updateData.security };
-      if (updateData.security.passwordPolicy) {
-        currentSettings.security.passwordPolicy = { ...currentSettings.security.passwordPolicy, ...updateData.security.passwordPolicy };
+      // passwordPolicy를 제외하고 나머지 속성만 업데이트
+      const { passwordPolicy, ...securityUpdate } = updateData.security;
+      
+      // 각 필드를 명시적으로 업데이트하여 타입 에러 방지
+      if (securityUpdate.requireAuth !== undefined) {
+        currentSettings.security.requireAuth = securityUpdate.requireAuth;
+      }
+      if (securityUpdate.sessionTimeout !== undefined) {
+        currentSettings.security.sessionTimeout = securityUpdate.sessionTimeout;
+      }
+      if (securityUpdate.maxLoginAttempts !== undefined) {
+        currentSettings.security.maxLoginAttempts = securityUpdate.maxLoginAttempts;
+      }
+      
+      // passwordPolicy는 별도로 처리 (undefined 필드는 기존 값 유지)
+      if (passwordPolicy) {
+        currentSettings.security.passwordPolicy = {
+          minLength: passwordPolicy.minLength ?? currentSettings.security.passwordPolicy.minLength,
+          requireUppercase: passwordPolicy.requireUppercase ?? currentSettings.security.passwordPolicy.requireUppercase,
+          requireLowercase: passwordPolicy.requireLowercase ?? currentSettings.security.passwordPolicy.requireLowercase,
+          requireNumbers: passwordPolicy.requireNumbers ?? currentSettings.security.passwordPolicy.requireNumbers,
+          requireSpecialChars: passwordPolicy.requireSpecialChars ?? currentSettings.security.passwordPolicy.requireSpecialChars,
+        };
       }
     }
     if (updateData.maintenance) {
