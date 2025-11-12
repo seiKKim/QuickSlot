@@ -55,8 +55,8 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // 구글 사이트 인증 코드 (Google Search Console에서 발급받은 코드로 교체 필요)
-    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || '',
+    // 구글 사이트 인증 코드
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || 'ZpkHNGlcyqzMm2lWO9CigaPgKxi4CnWbyLmI0tU26C4',
   },
   other: {
     // 네이버 서치어드바이저 인증 코드 (환경 변수가 없으면 하드코딩된 값 사용)
