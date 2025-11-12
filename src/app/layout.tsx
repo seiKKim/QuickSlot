@@ -112,9 +112,17 @@ export default function RootLayout({
     }
   };
 
+  // 인증 코드 (환경 변수가 없으면 하드코딩된 값 사용)
+  const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || 'ZpkHNGlcyqzMm2lWO9CigaPgKxi4CnWbyLmI0tU26C4';
+  const naverVerification = process.env.NEXT_PUBLIC_NAVER_VERIFICATION || 'f04bc9f156ecaca62be8301ec2a8aa7bcde51e14';
+
   return (
     <html lang="ko">
       <head>
+        {/* 구글 서치 콘솔 인증 메타태그 - 직접 추가 */}
+        <meta name="google-site-verification" content={googleVerification} />
+        {/* 네이버 서치어드바이저 인증 메타태그 - 직접 추가 */}
+        <meta name="naver-site-verification" content={naverVerification} />
         {/* 구조화된 데이터 (JSON-LD) */}
         <script
           type="application/ld+json"
